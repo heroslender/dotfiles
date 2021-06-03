@@ -22,4 +22,4 @@ source "$HOME/.shell.d/envx.bash"
 # sensitive configurations
 test -r ~/.bash_private && source ~/.bash_private
 
-test command -v screenfetch && screenfetch
+test "$(command -v screenfetch)" && screenfetch

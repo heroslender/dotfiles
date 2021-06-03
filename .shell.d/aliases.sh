@@ -11,6 +11,7 @@ alias sl="sl -e"
 alias dot="cd dotfiles"
 alias scripts="cd scripts"
 alias projects="cd projects"
+alias hmf="cd projects/menu-framework"
 
 alias free='free -h'
 alias df='df -h'
