@@ -10,8 +10,8 @@ __git_status_ps1() {
     local sc='%F{red}'
     local uc='%F{green}'
   else
-    local sc='\[\e[92m\]'
-    local uc='\[\e[93m\]'
+    local sc='\[\e[32m\]'
+    local uc='\[\e[33m\]'
   fi
 
   local exit=$?
@@ -38,12 +38,19 @@ __git_status_ps1() {
     test "${branch}" = master -o "${branch}" = main && b=$r
 
     local unstaged=""
-    local staged=""
     git diff --no-ext-diff --quiet || unstaged="$(git diff --numstat | wc -l)±"
-    git diff --no-ext-diff --cached --quiet || staged="$(git diff --cached --numstat | wc -l)•"
-
     test -n "$unstaged" && colored_git="$colored_git $uc$unstaged" && git="$git $unstaged"
+
+    local staged=""
+    git diff --no-ext-diff --cached --quiet || staged="$(git diff --cached --numstat | wc -l)•"
     test -n "$staged" && colored_git="$colored_git $sc$staged" && git="$git $staged"
+
+    local unpushed=$(git rev-list --count origin/main..HEAD)
+    test "$unpushed" -gt 0 && colored_git="$colored_git \[\e[36m\]$unpushed↑" && git="$git $unpushed↑"
+    
+    local unpulled=$(git rev-list --count HEAD..origin/main)
+    test "$unpulled" -gt 0 && colored_git="$colored_git \[\e[31m\]$unpulled↓" && git="$git $unpulled↓"
+
     colored_git="$g($b$branch$colored_git$g)"
     git="($branch$git)"
   fi
