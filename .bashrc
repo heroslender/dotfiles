@@ -18,6 +18,9 @@ source "$HOME/.shell.d/git-completion.bash"
 source "$HOME/.shell.d/termcap-colors.sh"
 source "$HOME/.shell.d/aliases.sh"
 source "$HOME/.shell.d/envx.bash"
+# Setup some settings for usage with wsl
+# e.g. support for vcxsrv
+source "$HOME/.shell.d/wsl.sh"
 
 # sensitive configurations
 test -r ~/.bash_private && source ~/.bash_private
